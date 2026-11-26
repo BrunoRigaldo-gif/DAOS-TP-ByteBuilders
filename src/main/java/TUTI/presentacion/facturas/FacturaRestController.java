@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import TUTI.entidades.Factura;
 import TUTI.error.ErrorAtributo;
 import TUTI.excepciones.Excepcion;
@@ -38,11 +38,11 @@ import jakarta.validation.Valid;
 @Tag(name = "Facturas", description = "Operaciones CRUD sobre facturas")
 public class FacturaRestController {
 
+	@Autowired
 	private FacturaService service;
 
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	@Operation(summary = "Obtiene todas las facturas registradas")
-	@ApiResponse(responseCode = "200", description = "Lista de facturas", content = @Content(mediaType = "application/json", schema = @Schema(implementation = FacturaResponseDTO.class)))
 	public ResponseEntity<List<FacturaResponseDTO>> getFacturas() throws Excepcion {
 
 		List<Factura> facturas = service.getActivas(); // Ignora las facturas con eliminado=true
@@ -78,19 +78,19 @@ public class FacturaRestController {
 		Long id = service.insert(dto);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
 		return ResponseEntity.created(location).build();
-		
+
 	}
-	
+
 	@PutMapping(value = "/{id}", consumes = "aplication/json")
 	@Operation(summary = "Actualiza un registro de facturas")
-	public ResponseEntity<Object> update (@Valid @RequestBody FacturaDTO dto, BindingResult result,
+	public ResponseEntity<Object> update(@Valid @RequestBody FacturaDTO dto, BindingResult result,
 			@PathVariable("id") Long id) throws Excepcion {
 		if (result.hasErrors()) {
 			return ResponseEntity.badRequest().body(formatearErrores(result));
 		}
 		return ResponseEntity.ok(buildResponseBody(service.update(dto, id)));
 	}
-	
+
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Elimina un registro de facturas")
 	public ResponseEntity<Void> delete(@PathVariable("id") Long id) throws Excepcion {

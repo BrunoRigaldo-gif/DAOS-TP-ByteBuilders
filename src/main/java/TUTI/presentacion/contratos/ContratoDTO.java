@@ -1,6 +1,6 @@
 package TUTI.presentacion.contratos;
 
-import java.util.Collection;
+import java.time.LocalDate;
 import java.util.Date;
 import TUTI.entidades.Contrato;
 import jakarta.validation.constraints.*;
@@ -10,7 +10,7 @@ public class ContratoDTO {
 	@Positive
 	private Long numero;
 	@NotNull
-	private Date fecha;
+	private LocalDate fecha;
 	@NotNull
 	@Positive
 	private Integer mesesVigencia;
@@ -22,6 +22,10 @@ public class ContratoDTO {
 	@NotNull
 	@Positive
 	private Long dniPropietario;
+	@NotNull
+	private Boolean eliminado = false;
+	@NotBlank
+	private String estado;
 
 	public Long getNumero() {
 		return numero;
@@ -31,11 +35,11 @@ public class ContratoDTO {
 		this.numero = numero;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
@@ -54,7 +58,6 @@ public class ContratoDTO {
 	public void setDniPropietario(Long dniPropietario) {
 		this.dniPropietario = dniPropietario;
 	}
-	
 
 	public Integer getMesesVigencia() {
 		return mesesVigencia;
@@ -72,12 +75,30 @@ public class ContratoDTO {
 		this.importe = importe;
 	}
 
+	public Boolean getEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(Boolean eliminado) {
+		this.eliminado = eliminado;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 	public Contrato toPojo() {
 		Contrato pojo = new Contrato();
 		pojo.setNumero(numero);
 		pojo.setFecha(fecha);
 		pojo.setMesesVigencia(mesesVigencia);
 		pojo.setImporte(importe);
+		pojo.setEliminado(eliminado);
+		pojo.setEstado(estado);
 		return pojo;
 	}
 }

@@ -3,6 +3,9 @@ package TUTI.servicios;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import TUTI.accesoDatos.IContratoRepo;
 import TUTI.accesoDatos.IFacturaRepo;
 import TUTI.entidades.Factura;
@@ -10,6 +13,7 @@ import TUTI.excepciones.Excepcion;
 import TUTI.presentacion.facturas.FacturaDTO;
 import jakarta.validation.Validator;
 
+@Service
 public class FacturaServiceImpl implements FacturaService {
 
 	@Autowired
@@ -25,7 +29,7 @@ public class FacturaServiceImpl implements FacturaService {
 	}
 
 	@Override
-	public List<Factura> getActivas() {
+	public List<Factura> getActivas(){	
 		return facturaRepo.findByEliminadoFalse();
 	}
 
@@ -35,10 +39,11 @@ public class FacturaServiceImpl implements FacturaService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Excepcion.class)
 	public Long insert(FacturaDTO dto) throws Excepcion {
 		Factura pojo = preparar(dto);
 		if (facturaRepo.existsById(pojo.getId()))
-			throw new Excepcion("id", "Ya existe un registro con ese numero.", 409);
+			throw new Excepcion("id", "Ya existe un registro con ese id.", 409);
 		return facturaRepo.save(pojo).getId();
 	}
 

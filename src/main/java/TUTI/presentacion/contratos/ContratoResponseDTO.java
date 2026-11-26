@@ -1,5 +1,6 @@
 package TUTI.presentacion.contratos;
 
+import java.time.LocalDate;
 import java.util.Date;
 import org.springframework.hateoas.RepresentationModel;
 import TUTI.entidades.Contrato;
@@ -8,19 +9,22 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ContratoResponseDTO extends RepresentationModel<ContratoResponseDTO> {
 	private Long numero;
-	private Date fecha;
+	private LocalDate fecha;
 	private Integer mesesVigencia;
 	private Double importe;
 	private Long dniInquilino;
 	private Long dniPropietario;
+	private Boolean eliminado;
+	private String estado;
 
 	public ContratoResponseDTO(Contrato pojo) {
-		this.numero = pojo.getNumero();
 		this.fecha = pojo.getFecha();
 		this.mesesVigencia = pojo.getMesesVigencia();
 		this.importe = pojo.getImporte();
 		this.dniInquilino = pojo.getInquilino().getDni();
 		this.dniPropietario = pojo.getPropietario().getDni();
+		this.eliminado = pojo.getEliminado();
+		this.estado = pojo.getEstado();
 	}
 
 	public Long getNumero() {
@@ -31,11 +35,11 @@ public class ContratoResponseDTO extends RepresentationModel<ContratoResponseDTO
 		this.numero = numero;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
@@ -54,7 +58,6 @@ public class ContratoResponseDTO extends RepresentationModel<ContratoResponseDTO
 	public void setDniPropietario(Long dniPropietario) {
 		this.dniPropietario = dniPropietario;
 	}
-	
 
 	public Integer getMesesVigencia() {
 		return mesesVigencia;
@@ -70,6 +73,14 @@ public class ContratoResponseDTO extends RepresentationModel<ContratoResponseDTO
 
 	public void setImporte(Double importe) {
 		this.importe = importe;
+	}
+
+	public Boolean getEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(Boolean eliminado) {
+		this.eliminado = eliminado;
 	}
 
 	// Esto oculta los links en los ejemplos de respuestas que muestra swagger (para

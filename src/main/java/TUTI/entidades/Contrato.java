@@ -1,11 +1,13 @@
 package TUTI.entidades;
 
+import java.time.LocalDate;
 import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -16,12 +18,12 @@ public class Contrato {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long numero;
 
-	private Date fecha;
-	
+	private LocalDate fecha;
+
 	@NotNull
 	@Positive
 	private Integer mesesVigencia;
-	
+
 	@NotNull
 	@Positive
 	private Double importe;
@@ -30,7 +32,10 @@ public class Contrato {
 	private Persona inquilino;
 	@ManyToOne
 	private Persona propietario;
-	
+
+	@NotBlank
+	private String estado;
+
 	@NotNull
 	private Boolean eliminado = false;
 
@@ -42,11 +47,11 @@ public class Contrato {
 		this.numero = numero;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
@@ -88,6 +93,14 @@ public class Contrato {
 
 	public void setEliminado(Boolean eliminado) {
 		this.eliminado = eliminado;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 

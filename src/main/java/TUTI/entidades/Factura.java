@@ -1,7 +1,6 @@
 package TUTI.entidades;
 
-import java.time.LocalDate;
-
+import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,10 +24,10 @@ public class Factura {
 	private String concepto;
 
 	@NotNull
-	private LocalDate fechaEmision;
+	private Date fechaEmision;
 
 	@NotNull
-	private LocalDate fechaVencimiento;
+	private Date fechaVencimiento;
 
 	@Positive
 	private Double importe;
@@ -63,19 +62,19 @@ public class Factura {
 		this.concepto = concepto;
 	}
 
-	public LocalDate getFechaEmision() {
+	public Date getFechaEmision() {
 		return fechaEmision;
 	}
 
-	public void setFechaEmision(LocalDate fechaEmision) {
+	public void setFechaEmision(Date fechaEmision) {
 		this.fechaEmision = fechaEmision;
 	}
 
-	public LocalDate getFechaVencimiento() {
+	public Date getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
-	public void setFechaVencimiento(LocalDate fechaVencimiento) {
+	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 

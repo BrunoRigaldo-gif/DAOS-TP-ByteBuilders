@@ -1,8 +1,10 @@
 package TUTI.presentacion.facturas;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import TUTI.entidades.Factura;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -18,13 +20,14 @@ public class FacturaDTO {
 	private Long numeroContrato;
 
 	@NotEmpty
+	@NotBlank
 	private String concepto;
 
 	@NotNull
-	private LocalDate fechaEmision;
+	private Date fechaEmision;
 
 	@NotNull
-	private LocalDate fechaVencimiento;
+	private Date fechaVencimiento;
 
 	@Positive
 	private Double importe;
@@ -59,19 +62,19 @@ public class FacturaDTO {
 		this.concepto = concepto;
 	}
 
-	public LocalDate getFechaEmision() {
+	public Date getFechaEmision() {
 		return fechaEmision;
 	}
 
-	public void setFechaEmision(LocalDate fechaEmision) {
+	public void setFechaEmision(Date fechaEmision) {
 		this.fechaEmision = fechaEmision;
 	}
 
-	public LocalDate getFechaVencimiento() {
+	public Date getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
-	public void setFechaVencimiento(LocalDate fechaVencimiento) {
+	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 

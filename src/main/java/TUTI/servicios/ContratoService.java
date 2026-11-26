@@ -12,6 +12,8 @@ public interface ContratoService {
 	Optional<Contrato> getById(Long numero) throws Excepcion;
 
 	Long insert(ContratoDTO dto) throws Excepcion;
+	
+	void save(Contrato f) throws Excepcion;
 
 	Contrato update(ContratoDTO dto, Long numero) throws Excepcion;
 

@@ -10,6 +10,7 @@ import TUTI.accesoDatos.IPersonaRepo;
 import TUTI.entidades.Contrato;
 import TUTI.excepciones.Excepcion;
 import TUTI.presentacion.contratos.ContratoDTO;
+import jakarta.persistence.Version;
 import jakarta.validation.Validator;
 
 @Service
@@ -37,12 +38,16 @@ public class ContratoServiceImpl implements ContratoService {
         return pojo;
     }
 
+
     @Override
     public Long insert(ContratoDTO dto) throws Excepcion {
         Contrato pojo = preparar(dto);
         if (repo.existsById(pojo.getNumero()))
             throw new Excepcion("numero", "Ya existe un registro con ese numero.", 409);
         return repo.save(pojo).getNumero();
+    }
+    @Override public void save(Contrato contrato) throws Excepcion{
+
     }
 
     @Override
