@@ -21,6 +21,10 @@ public class Contrato {
 	@NotNull
 	@Positive
 	private Integer mesesVigencia;
+	
+	@NotNull
+	@Positive
+	private Double importe;
 
 	@ManyToOne
 	private Persona inquilino;
@@ -61,5 +65,30 @@ public class Contrato {
 	public void setPropietario(Persona propietario) {
 		this.propietario = propietario;
 	}
+
+	public Integer getMesesVigencia() {
+		return mesesVigencia;
+	}
+
+	public void setMesesVigencia(Integer mesesVigencia) {
+		this.mesesVigencia = mesesVigencia;
+	}
+
+	public Double getImporte() {
+		return importe;
+	}
+
+	public void setImporte(Double importe) {
+		this.importe = importe;
+	}
+
+	public Boolean getEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(Boolean eliminado) {
+		this.eliminado = eliminado;
+	}
+	
 
 }
