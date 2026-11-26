@@ -13,6 +13,11 @@ public class ContratoDTO {
 	private Date fecha;
 	@NotNull
 	@Positive
+	private Integer mesesVigencia;
+	@Positive
+	private Double importe;
+	@NotNull
+	@Positive
 	private Long dniInquilino;
 	@NotNull
 	@Positive
@@ -49,11 +54,30 @@ public class ContratoDTO {
 	public void setDniPropietario(Long dniPropietario) {
 		this.dniPropietario = dniPropietario;
 	}
+	
+
+	public Integer getMesesVigencia() {
+		return mesesVigencia;
+	}
+
+	public void setMesesVigencia(Integer mesesVigencia) {
+		this.mesesVigencia = mesesVigencia;
+	}
+
+	public Double getImporte() {
+		return importe;
+	}
+
+	public void setImporte(Double importe) {
+		this.importe = importe;
+	}
 
 	public Contrato toPojo() {
 		Contrato pojo = new Contrato();
 		pojo.setNumero(numero);
 		pojo.setFecha(fecha);
+		pojo.setMesesVigencia(mesesVigencia);
+		pojo.setImporte(importe);
 		return pojo;
 	}
 }
