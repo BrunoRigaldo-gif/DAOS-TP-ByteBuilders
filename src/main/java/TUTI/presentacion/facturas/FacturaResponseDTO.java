@@ -1,7 +1,6 @@
 package TUTI.presentacion.facturas;
 
 import java.time.LocalDate;
-
 import org.springframework.hateoas.Links;
 import org.springframework.hateoas.RepresentationModel;
 import TUTI.entidades.Factura;

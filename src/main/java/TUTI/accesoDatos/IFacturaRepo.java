@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import TUTI.entidades.Factura;
 
 @Repository
-public interface IFacturaRepo extends JpaRepository<Factura,Long>{
+public interface IFacturaRepo extends JpaRepository<Factura, Long> {
 
 	List<Factura> findByEliminadoFalse();
 
