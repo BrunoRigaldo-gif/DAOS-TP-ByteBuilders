@@ -4,19 +4,16 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import TUTI.accesoDatos.IContratoRepo;
 import TUTI.accesoDatos.IPersonaRepo;
 import TUTI.entidades.Contrato;
 import TUTI.excepciones.Excepcion;
 import TUTI.presentacion.contratos.ContratoDTO;
-import jakarta.persistence.Version;
-import jakarta.validation.Validator;
+
 
 @Service
 public class ContratoServiceImpl implements ContratoService {
     @Autowired private IContratoRepo repo;
-    @Autowired private Validator validator;
     @Autowired private IPersonaRepo personaRepo;
 
     @Override
@@ -25,11 +22,6 @@ public class ContratoServiceImpl implements ContratoService {
     public Optional<Contrato> getById(Long numero) { return repo.findById(numero); }
 
     private Contrato preparar(ContratoDTO dto) throws Excepcion {
-        var errores = validator.validate(dto);
-        if (!errores.isEmpty()) {
-            var error = errores.iterator().next();
-            throw new Excepcion(error.getPropertyPath().toString(), error.getMessage(), 400);
-        }
         Contrato pojo = dto.toPojo();
         pojo.setInquilino(personaRepo.findById(dto.getDniInquilino())
                 .orElseThrow(() -> new Excepcion("dniInquilino", "El inquilino no existe.", 404)));
@@ -41,9 +33,9 @@ public class ContratoServiceImpl implements ContratoService {
 
     @Override
     public Long insert(ContratoDTO dto) throws Excepcion {
+    	dto.setEstado("Activo");
+    	dto.setEliminado(false);
         Contrato pojo = preparar(dto);
-        if (repo.existsById(pojo.getNumero()))
-            throw new Excepcion("numero", "Ya existe un registro con ese numero.", 409);
         return repo.save(pojo).getNumero();
     }
     @Override public void save(Contrato contrato) throws Excepcion{
@@ -64,7 +56,6 @@ public class ContratoServiceImpl implements ContratoService {
     public void delete(Long numero) throws Excepcion {
         if (!repo.existsById(numero))
             throw new Excepcion("numero", "No se encuentra el registro que desea eliminar.", 404);
-
         repo.deleteById(numero);
     }
 }

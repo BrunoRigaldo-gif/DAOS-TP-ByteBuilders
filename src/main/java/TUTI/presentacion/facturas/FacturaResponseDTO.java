@@ -1,6 +1,6 @@
 package TUTI.presentacion.facturas;
 
-import java.util.Date;
+import java.time.LocalDate;
 import org.springframework.hateoas.Links;
 import org.springframework.hateoas.RepresentationModel;
 import TUTI.entidades.Factura;
@@ -11,15 +11,15 @@ public class FacturaResponseDTO extends RepresentationModel<FacturaResponseDTO> 
 	private Long id;
 	private Long numeroContrato;
 	private String concepto;
-	private Date fechaEmision;
-	private Date fechaVencimiento;
+	private LocalDate fechaEmision;
+	private LocalDate fechaVencimiento;
 	private Double importe;
 	private String estado;
 	private Boolean eliminado = false;
 
 	public FacturaResponseDTO(Factura pojo) {
 		this.id = pojo.getId();
-		this.numeroContrato = pojo.getContrato() == null ? null : pojo.getContrato().getNumero();
+		this.numeroContrato = pojo.getContrato().getNumero();
 		this.concepto = pojo.getConcepto();
 		this.fechaEmision = pojo.getFechaEmision();
 		this.fechaVencimiento = pojo.getFechaVencimiento();
@@ -52,19 +52,19 @@ public class FacturaResponseDTO extends RepresentationModel<FacturaResponseDTO> 
 		this.concepto = concepto;
 	}
 
-	public Date getFechaEmision() {
+	public LocalDate getFechaEmision() {
 		return fechaEmision;
 	}
 
-	public void setFechaEmision(Date fechaEmision) {
+	public void setFechaEmision(LocalDate fechaEmision) {
 		this.fechaEmision = fechaEmision;
 	}
 
-	public Date getFechaVencimiento() {
+	public LocalDate getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
-	public void setFechaVencimiento(Date fechaVencimiento) {
+	public void setFechaVencimiento(LocalDate fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 

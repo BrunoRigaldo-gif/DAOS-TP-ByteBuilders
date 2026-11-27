@@ -5,13 +5,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import TUTI.accesoDatos.IContratoRepo;
 import TUTI.accesoDatos.IFacturaRepo;
 import TUTI.entidades.Factura;
 import TUTI.excepciones.Excepcion;
 import TUTI.presentacion.facturas.FacturaDTO;
-import jakarta.validation.Validator;
 
 @Service
 public class FacturaServiceImpl implements FacturaService {
@@ -20,8 +18,6 @@ public class FacturaServiceImpl implements FacturaService {
 	IFacturaRepo facturaRepo;
 	@Autowired
 	private IContratoRepo contratoRepo;
-	@Autowired
-	Validator validator;
 
 	@Override
 	public List<Factura> getAll() {
@@ -41,9 +37,9 @@ public class FacturaServiceImpl implements FacturaService {
 	@Override
 	@Transactional(rollbackFor = Excepcion.class)
 	public Long insert(FacturaDTO dto) throws Excepcion {
+		dto.setEliminado(false);
+		dto.setEstado("Pendiente");
 		Factura pojo = preparar(dto);
-		if (facturaRepo.existsById(pojo.getId()))
-			throw new Excepcion("id", "Ya existe un registro con ese id.", 409);
 		return facturaRepo.save(pojo).getId();
 	}
 
@@ -66,11 +62,6 @@ public class FacturaServiceImpl implements FacturaService {
 	}
 
 	private Factura preparar(FacturaDTO dto) throws Excepcion {
-		var errores = validator.validate(dto);
-		if (!errores.isEmpty()) {
-			var error = errores.iterator().next();
-			throw new Excepcion(error.getPropertyPath().toString(), error.getMessage(), 400);
-		}
 		Factura pojo = dto.toPojo();
 		pojo.setContrato(contratoRepo.findById(dto.getNumeroContrato())
 				.orElseThrow(() -> new Excepcion("numeroContrato", "El contrato no existe.", 404)));

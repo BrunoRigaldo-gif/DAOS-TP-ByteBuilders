@@ -1,11 +1,11 @@
 package TUTI.presentacion.contratos;
 
 import java.time.LocalDate;
-import java.util.Date;
 import org.springframework.hateoas.RepresentationModel;
 import TUTI.entidades.Contrato;
 import org.springframework.hateoas.Links;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 
 public class ContratoResponseDTO extends RepresentationModel<ContratoResponseDTO> {
 	private Long numero;
@@ -18,6 +18,7 @@ public class ContratoResponseDTO extends RepresentationModel<ContratoResponseDTO
 	private String estado;
 
 	public ContratoResponseDTO(Contrato pojo) {
+		this.numero = pojo.getNumero();
 		this.fecha = pojo.getFecha();
 		this.mesesVigencia = pojo.getMesesVigencia();
 		this.importe = pojo.getImporte();
@@ -82,11 +83,16 @@ public class ContratoResponseDTO extends RepresentationModel<ContratoResponseDTO
 	public void setEliminado(Boolean eliminado) {
 		this.eliminado = eliminado;
 	}
+	
 
-	// Esto oculta los links en los ejemplos de respuestas que muestra swagger (para
-	// dejar mas limpio el ejemplo).
-	// Pero sí se devuelven los links en la respuesta cuando se ejecuta el servicio
-	// realmente
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 	@Schema(hidden = true)
 	@Override
 	public Links getLinks() {

@@ -1,10 +1,12 @@
 package TUTI.entidades;
 
-import java.util.Date;
+import java.time.LocalDate;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,26 +19,28 @@ public class Factura {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = false) //optinal=false hace que no se pueda crear una factura sin contrato
+	@JoinColumn(name = "numero_contrato")
 	private Contrato contrato;
 
 	@NotEmpty
 	private String concepto;
 
 	@NotNull
-	private Date fechaEmision;
+	private LocalDate fechaEmision;
 
 	@NotNull
-	private Date fechaVencimiento;
+	private LocalDate fechaVencimiento;
 
 	@Positive
+	@NotNull
 	private Double importe;
 
 	@NotEmpty
 	private String estado;
 
 	@NotNull
-	private Boolean eliminado = false;
+	private Boolean eliminado;
 
 	public Long getId() {
 		return id;
@@ -62,19 +66,19 @@ public class Factura {
 		this.concepto = concepto;
 	}
 
-	public Date getFechaEmision() {
+	public LocalDate getFechaEmision() {
 		return fechaEmision;
 	}
 
-	public void setFechaEmision(Date fechaEmision) {
+	public void setFechaEmision(LocalDate fechaEmision) {
 		this.fechaEmision = fechaEmision;
 	}
 
-	public Date getFechaVencimiento() {
+	public LocalDate getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
-	public void setFechaVencimiento(Date fechaVencimiento) {
+	public void setFechaVencimiento(LocalDate fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 

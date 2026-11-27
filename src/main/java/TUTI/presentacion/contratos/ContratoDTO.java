@@ -1,12 +1,12 @@
 package TUTI.presentacion.contratos;
 
 import java.time.LocalDate;
-import java.util.Date;
 import TUTI.entidades.Contrato;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
 public class ContratoDTO {
-	@NotNull
+	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
 	@Positive
 	private Long numero;
 	@NotNull
@@ -22,8 +22,9 @@ public class ContratoDTO {
 	@NotNull
 	@Positive
 	private Long dniPropietario;
+
 	@NotNull
-	private Boolean eliminado = false;
+	private Boolean eliminado;
 	@NotBlank
 	private String estado;
 

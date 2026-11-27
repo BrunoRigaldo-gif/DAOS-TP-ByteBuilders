@@ -1,9 +1,8 @@
 package TUTI.presentacion.facturas;
 
 import java.time.LocalDate;
-import java.util.Date;
-
 import TUTI.entidades.Factura;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +10,7 @@ import jakarta.validation.constraints.Positive;
 
 public class FacturaDTO {
 
-	@NotNull
+	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
 	@Positive
 	private Long id;
 
@@ -19,24 +18,24 @@ public class FacturaDTO {
 	@Positive
 	private Long numeroContrato;
 
-	@NotEmpty
 	@NotBlank
 	private String concepto;
 
 	@NotNull
-	private Date fechaEmision;
+	private LocalDate fechaEmision;
 
 	@NotNull
-	private Date fechaVencimiento;
+	private LocalDate fechaVencimiento;
 
 	@Positive
+	@NotNull
 	private Double importe;
 
 	@NotEmpty
 	private String estado;
 
 	@NotNull
-	private Boolean eliminado = false;
+	private Boolean eliminado;
 
 	public Long getId() {
 		return id;
@@ -62,19 +61,19 @@ public class FacturaDTO {
 		this.concepto = concepto;
 	}
 
-	public Date getFechaEmision() {
+	public LocalDate getFechaEmision() {
 		return fechaEmision;
 	}
 
-	public void setFechaEmision(Date fechaEmision) {
+	public void setFechaEmision(LocalDate fechaEmision) {
 		this.fechaEmision = fechaEmision;
 	}
 
-	public Date getFechaVencimiento() {
+	public LocalDate getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
-	public void setFechaVencimiento(Date fechaVencimiento) {
+	public void setFechaVencimiento(LocalDate fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
@@ -113,4 +112,6 @@ public class FacturaDTO {
 		pojo.setEliminado(eliminado);
 		return pojo;
 	}
+
+	
 }
